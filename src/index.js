@@ -13,19 +13,34 @@ class App extends Component {
 
   constructor(props){
   	super(props);
-  	this.state = { videos: [] };
+  	this.state = {
+      videos: [],
+      selectedVideo: null
+    };
 
-    YTSearch({key: API_KEY, term: 'shrey singhal'},  (videos) => {
-        this.setState({videos: videos})
+    // initial search.
+    this.videoSearch('shrey singhal');
+  }
+
+  videoSearch(term) {
+    YTSearch({key: API_KEY, term: term},  (videos) => {
+        this.setState({
+          videos: videos,
+          selectedVideo: videos[0]
+        })
     });
 
+
   }
+
 render() {
   return (
     <div>
-        <SearchBar />
-        <VideoDetail video={this.state.videos[0]}/>
-        <VideoList videos={this.state.videos} /> {/*method of passing data from parent(App) to child class (VideoList).*/}
+        <SearchBar onSearchTermChange={(term) => this.videoSearch(term)}/>
+        <VideoDetail video={this.state.selectedVideo}/>
+        <VideoList
+        onSelectVideo={(selectedVideo) => this.setState({selectedVideo: selectedVideo})}
+        videos={this.state.videos} /> {/*method of passing data from parent(App) to child class (VideoList).*/}
     </div>
   );
 }
