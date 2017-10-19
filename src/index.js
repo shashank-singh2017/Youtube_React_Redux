@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
+import VideoDetail from './components/video_details';
 
 // importing SearchBar from search_bar.js with proper file path name
 import SearchBar from './components/search_bar';
@@ -23,6 +24,7 @@ render() {
   return (
     <div>
         <SearchBar />
+        <VideoDetail video={this.state.videos[0]}/>
         <VideoList videos={this.state.videos} /> {/*method of passing data from parent(App) to child class (VideoList).*/}
     </div>
   );
